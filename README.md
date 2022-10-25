@@ -1,6 +1,8 @@
 # comparatron
 Comparatron - a DIY digital optical comparator
 
+![Software View](./comparatron_software1.png)
+
 This is a DIY digital optical comparator, which is an instrument used to take precise measurements of physical objects through visual means. Optical comparators cost tens of thousands of dollars, but Comparatron costs less than $500 to build (most of that cost is the CNC pen plotter).
 
 It is essentially a USB digital microscope mounted to a CNC pen plotter. The microscope provides a very clear view of the object, while the CNC pen plotter lets us move the microscope with high precision. Additionally, an LED-backlit tracing board removes shadows so that we see clean edges.
