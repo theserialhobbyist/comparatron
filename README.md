@@ -15,7 +15,7 @@ Demonstration Video:
 
 -----------------------------------------------------------
 
-Phyiscal build instructions are available at: (coming soon)
+Phyiscal build instructions are available at: https://www.instructables.com/Comparatron-an-Affordable-Digital-Optical-Comparat/
 
 Parts needed for the build:
 
