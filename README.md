@@ -13,18 +13,18 @@ Phyiscal build instructions are available at: (coming soon)
 
 Parts needed for the build:
 
-iDraw Pen Plotter 2.0 - A4 Size
-Jiusion 40 to 1000x Magnification Endoscope
-LitEnergy Portable A4 Tracing LED Copy Board Light Box
-3D-printed spur gear
-3D-printed microscope mount
+1. iDraw Pen Plotter 2.0 - A4 Size
+2. Jiusion 40 to 1000x Magnification Endoscope
+3. LitEnergy Portable A4 Tracing LED Copy Board Light Box
+4. 3D-printed spur gear
+5. 3D-printed microscope mount
 
 Optional parts:
 
-USB Hub
-USB extension cable
-3M Commands strips (to attach light board and USB hub)
-Zip ties (to tidy wiring)
+6. USB Hub
+7. USB extension cable
+8. 3M Commands strips (to attach light board and USB hub)
+9. Zip ties (to tidy wiring)
 
 -----------------------------------------------------------
 
