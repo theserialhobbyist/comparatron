@@ -9,6 +9,10 @@ It is essentially a USB digital microscope mounted to a CNC pen plotter. The mic
 
 The software interface lets users connect to and control the movement of the CNC pen plotter and create points, then export those points as a DXF that they can import into CAD software. This makes Comparatron very useful for reverse-engineering, as you can find the exact dimensions of a part (down to around +/-0.02mm). That's especially true for organic and irregular geometry that is difficult to measure with calipers, and for objects that are very small.
 
+Demonstration Video:
+[![ComparatronDemo](https://img.youtube.com/vi/9CRdngo2uUE/0.jpg)](https://www.youtube.com/watch?v=9CRdngo2uUE)
+
+
 -----------------------------------------------------------
 
 Phyiscal build instructions are available at: (coming soon)
