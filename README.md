@@ -1,7 +1,7 @@
 # comparatron
 Comparatron - a DIY digital optical comparator
 
-![Software View](./comparatron_software1.png)
+![Comparatron](./comparatron1.jpg)
 
 This is a DIY digital optical comparator, which is an instrument used to take precise measurements of physical objects through visual means. Optical comparators cost tens of thousands of dollars, but Comparatron costs less than $500 to build (most of that cost is the CNC pen plotter).
 
@@ -45,6 +45,8 @@ I've only tested the software on Windows 10. It should work in other versions of
 Both the Python script and a standalone Windows executable are available. The executable is ideal if you don't want to install the required dependencies yourself.
 
 -----------------------------------------------------------
+
+![Software View](./comparatron_software1.png)
 
 Software usage:
 
