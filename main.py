@@ -1,14 +1,16 @@
-# Comparatron V0.9
+# Comparatron V1.0
 # by Cameron Coward
 # http://www.cameroncoward.com
 
-# DearPyGUI for GUI, OpenCV for video capture, NumPy for calculations, PySerial for communication with machine, EXDXF for creating DXF drawings
+# DearPyGUI for GUI, OpenCV for video capture, NumPy for calculations,
+#PySerial for communication with machine, EXDXF for creating DXF drawings, sys for clean exit
 import dearpygui.dearpygui as dpg
 import cv2 as cv
 import numpy as np
 import serial
 import serial.tools.list_ports
 import ezdxf
+import sys
 
 doc = ezdxf.new(dxfversion="R2010") #create new DXF drawing
 doc.layers.add("COMPARATRON_OUTPUT", color=2) #add layer for our drawing
@@ -18,7 +20,7 @@ ser = None #for use with the serial connection later
 ports = serial.tools.list_ports.comports()
 
 dpg.create_context() #create DearPyGUI object
-dpg.create_viewport(title='Comparatron', width=1280, height=720) #main program window
+dpg.create_viewport(title='Comparatron by Cameron Coward', width=1280, height=720) #main program window
 dpg.setup_dearpygui() #setup DearPyGUI
 
 vid = cv.VideoCapture(0) #create OpenCV object with first video feed available
@@ -156,6 +158,7 @@ def create_new_point():
     print(coords[1]) #second split is Y coordinates
     point_x = float(coords[0]) #convert X coordinate string to float
     point_y = float(coords[1]) #convert Y coordinate string to float
+    global msp #to use the same modelspace we already created
     msp.add_point((point_x,point_y), dxfattribs={"color": 7}) #create a point in the DXF at the coordinates
     draw_x = 5 + int(3 * point_x) #scale coordinate for use in the DearPyGUI drawing plot
     draw_y = 5 + int(-3 * point_y) #scale coordinate for use in the DearPyGUI drawing plot
@@ -169,8 +172,19 @@ def export_dxf_now(): #save the ongoing DXF file as the filename set by the user
     print("DXF output to: ",dxf_filename)
     
 def close_ser_now(): #close the serial connection to the machine, allowing for a new connection without a power cycle
+    vid.release() #closes video feed
+    print("Released video")
     global ser #to use the same object we already created
-    ser.close()
+    
+    if ser.isOpen() == True:
+        ser.close() #closes the serial COM port connection to machine
+        print("Closed serial connection")
+    else:
+        print("No open serial connection to close")
+    
+    dpg.destroy_context()
+    print("Destroyed DearPyGUI context")
+    sys.exit()
 
 with dpg.texture_registry(show=False): #creates a "texture" of the video feed so we can display it
     dpg.add_raw_texture(frame.shape[1], frame.shape[0], texture_data, tag="texture_tag", format=dpg.mvFormat_Float_rgb)
@@ -214,7 +228,10 @@ with dpg.window(label="DXF Output", pos=(460,frame_height+300), width=215, heigh
     dpg.add_text("for the DXF output:")
     dpg.add_input_text(tag="dxf_name", default_value="comparatron.dxf")
     dpg.add_button(tag="export_dxf", label="Export DXF", callback=export_dxf_now)
-    dpg.add_button(tag="close_ser", label="Close Serial Connection", callback=close_ser_now)
+    dpg.add_separator()
+    dpg.add_text("Close serial and")
+    dpg.add_text("release video:")
+    dpg.add_button(tag="close_ser", label="Clean exit", callback=close_ser_now)
     
 with dpg.window(label="Created Plot", pos=(frame_width+55, 20), width=700, height=960, no_close=True): #window that shows a visualization of plotted points
     with dpg.drawlist(tag="plot", width=660, height=920): #the drawing space for the plot
@@ -225,14 +242,15 @@ dpg.show_viewport() #renders the DearPyGUI viewport
 dpg.maximize_viewport() #maximizes the window
 while dpg.is_dearpygui_running(): #DearPyGUI render loop
 
-    # DearPyGUI framerate is tied to video feed framerate in this loop
-    ret, frame = vid.read()
-    cv.drawMarker(frame, (target_x, target_y), (0, 0, 255), cv.MARKER_CROSS, 10, 1)
-    data = np.flip(frame, 2)
-    data = data.ravel()
-    data = np.asfarray(data, dtype='f')
-    texture_data = np.true_divide(data, 255.0)
-    dpg.set_value("texture_tag", texture_data)
+    if vid.isOpened():
+        ret, frame = vid.read()
+        cv.drawMarker(frame, (target_x, target_y), (0, 0, 255), cv.MARKER_CROSS, 10, 1)
+        data = np.flip(frame, 2)
+        data = data.ravel()
+        data = np.asfarray(data, dtype='f')
+        texture_data = np.true_divide(data, 255.0)
+        dpg.set_value("texture_tag", texture_data)
+        # DearPyGUI framerate is tied to video feed framerate in this loop
     
     dpg.render_dearpygui_frame()
 
